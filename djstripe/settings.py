@@ -110,6 +110,8 @@ ZERO_DECIMAL_CURRENCIES = set([
     "vnd", "vuv", "xaf", "xof", "xpf",
 ])
 
+SUBSCRIBER_MODEL_MANAGER = getattr(settings, 'DJSTRIPE_SUBSCRIBER_MODEL_MANAGER', 'objects')
+
 
 def get_subscriber_model_string():
     """Get the configured subscriber model as a module path string."""
@@ -152,6 +154,10 @@ def get_subscriber_model():
 
     return subscriber_model
 
+
+def get_subscriber_model_manager():
+    subscriber_model = get_subscriber_model()
+    return getattr(subscriber_model, SUBSCRIBER_MODEL_MANAGER)
 
 def get_stripe_api_version():
     """Get the desired API version to use for Stripe requests."""

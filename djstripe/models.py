@@ -483,11 +483,12 @@ Use ``Customer.sources`` and ``Customer.subscriptions`` to access them.
         subscriber_id = data.get("metadata", {}).get(self.djstripe_subscriber_key)
         if subscriber_id:
             cls = djstripe_settings.get_subscriber_model()
+            cls_manager = djstripe_settings.get_subscriber_model_manager()
             try:
                 # We have to perform a get(), instead of just attaching the PK
                 # blindly as the object may have been deleted or not exist.
                 # Attempting to save that would cause an IntegrityError.
-                self.subscriber = cls.objects.get(pk=subscriber_id)
+                self.subscriber = cls_manager.get(pk=subscriber_id)
             except (cls.DoesNotExist, ValueError):
                 logger.warning("Could not find subscriber %r matching customer %r", subscriber_id, self.stripe_id)
                 self.subscriber = None

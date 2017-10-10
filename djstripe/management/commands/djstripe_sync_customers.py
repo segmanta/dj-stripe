@@ -11,7 +11,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from django.core.management.base import BaseCommand
 
-from ...settings import get_subscriber_model
+from ...settings import get_subscriber_model_manager
 from ...sync import sync_subscriber
 
 
@@ -22,7 +22,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """Call sync_subscriber on Subscribers without customers associated to them."""
-        qs = get_subscriber_model().objects.filter(customer__isnull=True)
+        qs = get_subscriber_model_manager().filter(customer__isnull=True)
         count = 0
         total = qs.count()
         for subscriber in qs:
