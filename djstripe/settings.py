@@ -155,7 +155,7 @@ def get_subscriber_model():
     return subscriber_model
 
 
-def get_subscriber_model_manager():
+def get_subscriber_model_objects():
     subscriber_model = get_subscriber_model()
     return getattr(subscriber_model, SUBSCRIBER_MODEL_MANAGER)
 
